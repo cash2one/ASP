@@ -6,11 +6,11 @@ import datetime
 import re
 import os
 import sqlite3
+import argparse
 
 import requests
 import lxml.html
 from pyquery import PyQuery as pq
-#import mysql.connector
 
 
 URL = 'https://www.green-japan.com'
@@ -423,5 +423,10 @@ def crawl_main(db):
 
 
 if __name__ == '__main__':
-  setup_database(db)
-  crawl_main(db)
+  parser = argparse.ArgumentParser(description='Crawler')
+  parser.add_argument('db', metavar='DB', type=str, help='DataBase Name')
+
+  args = parser.parse_args()
+
+  setup_database(args.dbdb)
+  crawl_main(args.db)
