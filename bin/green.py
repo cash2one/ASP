@@ -64,7 +64,7 @@ if __name__ == '__main__':
   subprocess.check_call(['/usr/bin/env', 'python3', crawler, db])
 
   # Extractorの起動
-  subprocess.check_call(['/usr/bin/env', 'python3'. extractor, db])
+  subprocess.check_call(['/usr/bin/env', 'python3', extractor, db])
 
   # Rankerの起動
-  subprocess.check_call(['/usr/bin/env', 'python3'. ranker, db])
+  subprocess.check_call(['/usr/bin/env', 'python3', ranker, db])
