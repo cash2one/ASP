@@ -14,6 +14,8 @@ _re_num = re.compile('[\d,]+')
 independece_word = []
 stop_word = []
 
+user_dic = os.environ.get('ASP_HOME', '/home/asp') + '/dic/asp.dic'
+
 def read_independece_word():
   fp = os.environ.get('ASP_HOME', '/home/asp') + '/dic/independece.txt'
   with open(fp, 'r', encoding='utf-8') as f:
@@ -33,7 +35,37 @@ def dict_factory(cursor, row):
   for idx, col in enumerate(cursor.description):
     d[col[0]] = row[idx]
   return d
-      
+
+def setup_database(db_name):
+  with sqlite3.connect(db_name) as con:
+    con.row_factory = dict_factory
+    cur = con.cursor()
+
+    sql = '''DROP TABLE IF EXISTS offer_keywords; '''
+    cur.execute(sql)
+    
+    sql = '''
+    CREATE TABLE offer_keywords (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      offer_id BIGINT UNSIGNED,
+      keyword_id BIGINT UNSIGNED NOT NULL
+    )
+    '''
+    cur.execute(sql)
+
+    sql = '''DROP TABLE IF EXISTS keywords; '''
+    cur.execute(sql)
+    
+    sql = '''
+    CREATE TABLE keywords (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      keyword VARCHAR(128) UNIQUE NOT NULL
+    )
+    '''
+    cur.execute(sql)
+    con.commit()
+  
+  
       
 def extractor(db_name):
   with sqlite3.connect(db_name) as con:
@@ -136,7 +168,7 @@ def save_database(offer_id, keywords, cur):
 
     
 def get_words(text):
-  tagger = MeCab.Tagger('-Ochasen -d /usr/lib/mecab/dic/mecab-ipadic-neologd')  # Ubuntu
+  tagger = MeCab.Tagger('-Ochasen -d /usr/lib/mecab/dic/mecab-ipadic-neologd -u {}'.format(user_dic))  # Ubuntu
   tagger.parse('') #　おまじない(mecabのバグです)
   words = []
   node = tagger.parseToNode(text)
@@ -157,4 +189,5 @@ if __name__ == '__main__':
   read_independece_word()
   read_stop_word()
 
+  setup_database(args.db)
   extractor(args.db)

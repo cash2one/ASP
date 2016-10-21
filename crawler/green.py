@@ -163,30 +163,10 @@ def setup_database(db_name):
     )
     '''
     cur.execute(sql)
-
-    sql = '''
-    CREATE TABLE offer_keywords (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      offer_id BIGINT UNSIGNED,
-      keyword_id BIGINT UNSIGNED NOT NULL
-    )
-    '''
-    cur.execute(sql)
-
-    sql = '''
-    CREATE TABLE keywords (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      keyword VARCHAR(128) UNIQUE NOT NULL
-    )
-    '''
-    cur.execute(sql)
     con.commit()
   
     
 def save_database(db, offer):
-  #connect = mysql.connector.connect(user='batch', password='@dminpass', host='localhost', database='debug_green', charset='utf8')
-  #cur = connect.cursor(dictionary=True)
-
   with sqlite3.connect(db) as con:
     con.row_factory = dict_factory
     cur = con.cursor()
@@ -428,5 +408,5 @@ if __name__ == '__main__':
 
   args = parser.parse_args()
 
-  setup_database(args.dbdb)
+  setup_database(args.db)
   crawl_main(args.db)
