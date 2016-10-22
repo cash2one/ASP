@@ -12,7 +12,8 @@ def create_table(db):
       site TEXT,
       date DATE,
       year INTEGER,
-      woy  INTEGER
+      woy  INTEGER,
+      path TEXT
     )
     '''
     cur.execute(sql)

@@ -3,6 +3,7 @@ import subprocess
 import logging
 import os
 import datetime
+import sqlite3
 
 from slack_log_handler import SlackLogHandler
 
@@ -46,13 +47,14 @@ logger.addHandler(slack)
 if __name__ == '__main__':
   # Pathの決定
   home = os.environ.get('ASP_HOME', '/home/asp')
-  now = datetime.datetime.utcnow()
+  now = datetime.datetime.utcnow() + datetime.timedelta(hours=9)
 
   if os.path.isdir(home + '/db/{year:04d}'.format(year=now.year)) is False:
     os.makedirs(home + '/db/{year:04d}'.format(year=now.year))
     
   db = home + '/db/{year:04d}/{year:04d}_{week:02d}_green.sqlite3'.format(year=now.year, week=now.isocalendar()[1])
-
+  maindb = home + '/db/main.sqlite3'
+  
   if os.path.exists(db):
     os.unlink(db)
 
@@ -68,3 +70,15 @@ if __name__ == '__main__':
 
   # Rankerの起動
   subprocess.check_call(['/usr/bin/env', 'python3', ranker, db])
+
+  with sqlite3.connect(maindb) as con:
+    cur = con.cursor()
+
+    sql = '''
+    INSERT INTO crawl_history (site, date, year, woy) VALUES ('green', ?, ?, ?);
+    '''
+    cur.execute(sql, (datetime.date(year=now.year, month=now.month, day=now.day), now.year, now.isocalendar()[1]))
+
+    con.commit()
+
+  
