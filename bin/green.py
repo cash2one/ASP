@@ -56,18 +56,17 @@ if __name__ == '__main__':
   maindb = home + '/db/main.sqlite3'
   
   if os.path.exists(db):
-    #os.unlink(db)
-    pass
+    os.unlink(db)
 
   crawler = home + '/crawler/green.py'
   extractor = home + '/keyword/green.py'
   ranker = home + '/ranking/green.py'
   
   # Crawlerの起動
-  #subprocess.check_call(['/usr/bin/env', 'python3', crawler, db])
+  subprocess.check_call(['/usr/bin/env', 'python3', crawler, db])
 
   # Extractorの起動
-  #subprocess.check_call(['/usr/bin/env', 'python3', extractor, db])
+  subprocess.check_call(['/usr/bin/env', 'python3', extractor, db])
 
   # Rankerの起動
   subprocess.check_call(['/usr/bin/env', 'python3', ranker, db])
