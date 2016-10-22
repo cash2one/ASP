@@ -56,17 +56,18 @@ if __name__ == '__main__':
   maindb = home + '/db/main.sqlite3'
   
   if os.path.exists(db):
-    os.unlink(db)
+    #os.unlink(db)
+    pass
 
   crawler = home + '/crawler/green.py'
   extractor = home + '/keyword/green.py'
   ranker = home + '/ranking/green.py'
   
   # Crawlerの起動
-  subprocess.check_call(['/usr/bin/env', 'python3', crawler, db])
+  #subprocess.check_call(['/usr/bin/env', 'python3', crawler, db])
 
   # Extractorの起動
-  subprocess.check_call(['/usr/bin/env', 'python3', extractor, db])
+  #subprocess.check_call(['/usr/bin/env', 'python3', extractor, db])
 
   # Rankerの起動
   subprocess.check_call(['/usr/bin/env', 'python3', ranker, db])
@@ -75,9 +76,9 @@ if __name__ == '__main__':
     cur = con.cursor()
 
     sql = '''
-    INSERT INTO crawl_history (site, date, year, woy) VALUES ('green', ?, ?, ?);
+    INSERT INTO crawl_history (site, date, year, woy, path) VALUES ('green', ?, ?, ?, ?);
     '''
-    cur.execute(sql, (datetime.date(year=now.year, month=now.month, day=now.day), now.year, now.isocalendar()[1]))
+    cur.execute(sql, (datetime.date(year=now.year, month=now.month, day=now.day), now.year, now.isocalendar()[1], db))
 
     con.commit()
 
