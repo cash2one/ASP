@@ -6,7 +6,6 @@ import re
 import sqlite3
 import argparse
 
-import mysql.connector
 import MeCab
 
 
