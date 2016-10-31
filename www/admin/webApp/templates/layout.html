@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="ja">
+	<head>
+		<title>ASP {{ page.title  }}	</title>
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+	</head>
+	<body>
+		<nav>
+			<a href="/green">Green</a>
+			<a href="/display">表示</a>
+			<a href="/tool">Tools</a>
+		</nav>
+		{% block body %}
+		{% endblock %}
+	</body>
+</html>

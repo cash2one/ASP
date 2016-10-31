@@ -1,0 +1,36 @@
+a {
+		border-radius: 6px 6px 0 0;
+		display: inline-block;
+		line-height: 32px;
+		font: sans-serif;
+		text-align: center;
+		background-color: #efefef;
+		color: black;
+		margin-left: 4px;
+		text-decoration: none;
+		padding: 0 32px;
+}
+
+a:nth-child(1) { border-top: 6px solid tomato; }
+a:nth-child(3) { border-top: 6px solid steelblue; }
+a:nth-child(2) { border-top: 6px solid gold; }
+a:nth-child(4) { border-top: 6px solid teal; }
+
+.content {
+		border: 1px solid lightgray;
+		height: 320px;
+		display: none;
+		padding: 32px;
+}
+
+.content:target {
+		display: block;
+}
+
+table {
+		border-collapse: collapse;
+		border: 1px #000000 solid;
+}
+td, th {
+		border: 1px #000000 solid;
+}

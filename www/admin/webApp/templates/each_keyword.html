@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+{% block body %}
+<form action="/Green" method="POST">
+	<select name="history">
+		{% for history in page.histories %}
+		<option value={{ history.id|safe }}>{{history.date|safe}}</option>
+		{% endfor %}
+	</select>
+	<input type="submit" value="表示">
+</form>
+<form action="/save_{{ page.page }}" method="POST">
+	<table>
+		<caption> {{ page.page }} Keyword </caption>
+		<thead>
+			<tr>
+				<th>Rank</th>
+				<th>先週のRank</th>
+				<th>キーワード</th>
+				<th>ポイント</th>
+				<th>有効</th>
+		</tr>
+		</thead>
+		<tbody>
+			{% for keyword in page.keywords %}
+			<tr>
+				<th>{{ keyword.rank|safe }}</th>
+				<th>{{ keyword.last_rank|safe }}</th>
+				<td>{{ keyword.keyword|safe }}</td>
+				<td>{{ keyword.point|safe }}</td>
+				<td><input type="checkbox" name="valid" value="{{ keyword.no }}" checked></input></td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	<input type="submit" value="保存">
+</form>
+
+{% endblock %}
