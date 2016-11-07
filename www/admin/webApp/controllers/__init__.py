@@ -2,3 +2,4 @@
 
 import webApp.controllers.crawler
 import webApp.controllers.keywords
+import webApp.controllers.ranking

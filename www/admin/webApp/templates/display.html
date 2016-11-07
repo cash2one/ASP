@@ -1,14 +1,16 @@
 {% extends "layout.html" %}
 {% block body %}
-<form action="/Green" method="POST">
-	<select name="history">
-		{% for history in page.histories %}
-		<option value="{{ history.id|safe }}"{% if history.id == page.date_id %} SELECTED{% endif %}>{{history.date|safe}}</option>
-		{% endfor %}
-	</select>
-	<input type="submit" value="表示">
+{% if page.page is none %}
+<form action="/display" method="GET">
+	<input type="hidden" value="determine" name="action">
+	<input type="submit" value="取り込み">
 </form>
+{% else %}
 <form action="/save_{{ page.page }}" method="POST">
+	<input type="submit" value="保存">
+	今週の一言:
+	<textarea name="hitokoto" colos="100" rows="5"></textarea>
+	<input type="text" name="year" size="4">年<input type="text" name="month" size="2">月<input type="text" name="day" size="2">日発表
 	<table>
 		<caption> {{ page.page }} Keyword </caption>
 		<thead>
@@ -33,7 +35,7 @@
 		</tbody>
 	</table>
 	<input type="hidden" name="date_id" value="{{ page.date_id }}">
-	<input type="submit" value="保存">
 </form>
+{% endif %}
 
 {% endblock %}

@@ -1,0 +1,165 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>圧倒的成長プロジェクト；週間ランキング</title>
+	<link rel="canonical" href="http://asp.shime.tech/">
+	<meta name="description" content="">
+	<meta property="og:locale" content="ja_JP">
+	<meta property="og:type" content="website">
+	<meta property="og:title" content="圧倒的成長プロジェクト；週間ランキング">
+	<meta property="og:url" content="http://asp.shime.tech/">
+	<meta property="og:site_name" content="圧倒的成長プロジェクト">
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:title" content="圧倒的成長プロジェクト；週間ランキング">
+	<link rel="stylesheet" href="/css/top.css">
+	<link rel="stylesheet" href="/css/font-awesome/css/font-awesome.min.css">
+	<script src="/js/jquery-3.1.1.min.js"></script>
+	<script src="/js/common.js"></script>
+</head>
+<body>
+
+<div id="menu">
+	<div class="bg">
+		<div class="overlay"></div>
+	</div>
+	<div class="switch">
+		<div class="bar"></div>
+		<div class="bar"></div>
+		<div class="bar"></div>
+	</div>
+	<div class="container">
+		<h3>今週の圧倒的ランキング</h3>
+		<p></p>
+		<ul>
+			<li><a href="">圧倒的成長プロジェクトって</a></li>
+			<li><a href="">HR Tech とは</a></li>
+			<li><a href="">企業の宗教観</a></li>
+			<li><a href="">求人情報と求職活動</a></li>
+		</ul>
+		<div class="bottom">
+			<div class="sns">
+				<h3>Share us !!</h3>
+				<div class="icons">
+					<a href="" target="_blank"><i class="fa fa-twitter"></i></a>
+					<a href="" target="_blank"><i class="fa fa-facebook"></i></a>
+				</div>
+			</div>
+			<div class="copyright">ATTOUTEKI SEICHO PROJECT.</div>
+		</div>
+	</div>
+</div>
+
+<header>
+	<div class="container">
+		<h1>圧倒的成長プロジェクト；週間ランキング</h1>
+		<p class="green">ATTOUTEKI SEICHOU PROJECT.</p>
+		<p class="white">Check your job category,<br>Get Your Future!!</p>
+	</div>
+</header>
+<div class="container">
+
+<div class="blacket">
+	<div class="left"></div>
+	<h2>
+		<span>今</span>
+		<span>、</span>
+		<span>流</span>
+		<span>行</span>
+		<span>り</span>
+		<span>の</span>
+		<span class="mobile"><br></span>
+		<span>&nbsp;#&nbsp;</span>
+		<span>ひ</span>
+		<span>っ</span>
+		<span>か</span>
+		<span>け</span>
+		<span>求</span>
+		<span>人</span>
+		<span>ワ</span>
+		<span>ー</span>
+		<span>ド</span>
+	</h2>
+	<div class="right"></div>
+</div>
+<div class="boxes weekly">
+	<div class="box twothird">
+		<h3>今週の圧倒的順位</h3>
+	</div>
+	<div class="box onethird">
+		<h3>今週の成長</h3>
+		<p></p>
+		<ul>
+			<li>
+				<a href="" target="_blank">
+					<i class="fa fa-twitter"></i>
+				</a>
+			</li>
+			<li>
+				<a href="" target="_blank">
+					<span class="line">LINE</span>
+				</a>
+			</li>
+			<li>
+				<a href="" target="_blank">
+					<i class="fa fa-facebook"></i>
+				</a>
+			</li>
+			<li>
+				<a href="" target="_blank">
+					<span class="hatena">B!</span>
+				</a>
+			</li>
+		</ul>
+	</div>
+</div>
+<div class="boxes category"></div>
+
+<script>
+var cats = [
+
+	];
+for ( var i=0,c=cats.length; i<c; i++ ) {
+	var b = cats[i];
+	var box = $("<div/>",{ class: "box onethird" });
+	box.append($("<h3/>").append(b.shift()));
+	for ( var j=0,d=b.length; j<d; j++ ) {
+		var r = b[j];
+		var rank = $("<div/>",{ class: "rank" });
+		rank.append($("<span/>",{ class: "num" }).append(j+1));
+		rank.append($("<span/>",{ class: r.t }));
+		rank.append($("<span/>",{ class: "word" }).append(r.w));
+		box.append(rank);
+	}
+	$(".boxes.category").append(box);
+}
+$(window).on("load",function(){
+	$(".blacket").addClass("on");
+	setTimeout(function(){
+		$("#menu, header, .blacket .left, .blacket .right, .box, footer").addClass("shown");
+	}, 2600);
+});
+</script>
+</div>
+<footer>
+	<div class="sns">
+		<h3>Share us !!</h3>
+		<div class="icons">
+			<a href="" target="_blank"><i class="fa fa-twitter"></i></a>
+			<a href="" target="_blank"><i class="fa fa-facebook"></i></a>
+		</div>
+	</div>
+	<nav>
+		<ul>
+			<li><a href="/about/">圧倒的成長プロジェクトって</a></li>
+			<li><a href="">HR Techとは</a></li>
+			<span class="mobile"><br></span>
+			<li><a href="">企業の宗教観</a></li>
+			<li><a href="">求人情報と求職活動</a></li>
+		</ul>
+	</nav>
+	<div class="copyright">COPYRIGHT 2016 ATTOUTEKI SEICHO PROJECT. <span class="mobile"><br></span>ALL RIGHTS RESERVED</div>
+</footer>
+</body>
+</html>

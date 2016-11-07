@@ -44,3 +44,44 @@ def get_with_date(site, date_id):
 
   return ret
     
+def get_total_rank():
+  r = models.maindb.crawl_history("green", 1)
+  green_keyword = models.sitedb.get_rank(r[0]['path'])
+  # {'rank': r['rank'], 'keyword': r['keyword'], 'point': r['point'], 'no': r['rowid']}
+
+  keyword = {}
+  for w in green_keyword:
+    if w['keyword'] not in keyword:
+      keyword[w['keyword']] = {'keyword': w['keyword'],
+                               'point': 0}
+    
+    keyword[w['keyword']]['point'] += w['point']
+    
+  last_rank = {}
+  keyword2 = {}#models.maindb.latest_rank()
+  for k in keyword2:
+    last_rank[k['keyword']] = k['rank']
+
+  for k in keyword:
+    keyword[k]['last_rank'] = last_rank.get(k, '-')
+
+  r = []
+  for k in keyword:
+    r.append(keyword[k])
+    
+  ret = [] 
+
+  prev_point = 0
+  rank = 0
+  i = 1
+  for k in sorted(r, key=lambda x:x['point'], reverse=True):
+    if prev_point != k['point']:
+      rank += i
+      i = 1
+    else:
+      i += 1
+    k['rank'] = rank
+    ret.append(k)
+    prev_point = k['point']
+    
+  return ret

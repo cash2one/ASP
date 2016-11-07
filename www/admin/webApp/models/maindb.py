@@ -65,3 +65,100 @@ def crawl_db(site, rowid):
     return None
   else:
     return ret[0]
+
+def get_latest_rank():
+  home = os.environ.get('ASP_HOME', '/home/asp')
+  db = home + '/db/main.sqlite3'
+
+  ret = []
+
+  with sqlite3.connect(db) as con:
+    con.row_factory = dict_factory
+    cur = con.cursor()
+
+    sql = '''
+    SELECT
+     distinct date
+    FROM
+     display_rank
+    ORDER BY date DESC
+    LIMIT 1
+    '''
+  
+    cur.execute(sql)
+    date = cur.fetchone()
+    print(date)
+
+    if date is None:
+      pass
+
+def remove_comment(tm):
+  home = os.environ.get('ASP_HOME', '/home/asp')
+  db = home + '/db/main.sqlite3'
+  
+  with sqlite3.connect(db) as con:
+    con.row_factory = dict_factory
+    cur = con.cursor()
+
+    sql = '''
+    DELETE FROM
+     weekly_comment
+    WHERE
+     date = ?
+    '''
+    cur.execute(sql, (tm,))
+    con.commit()
+
+def remove_ranking(tm):
+  home = os.environ.get('ASP_HOME', '/home/asp')
+  db = home + '/db/main.sqlite3'
+  
+  with sqlite3.connect(db) as con:
+    con.row_factory = dict_factory
+    cur = con.cursor()
+
+    sql = '''
+    DELETE FROM
+     display_rank
+    WHERE
+     date = ?
+    '''
+    cur.execute(sql, (tm,))
+    con.commit()
+    
+def save_comment(tm, comment):
+  home = os.environ.get('ASP_HOME', '/home/asp')
+  db = home + '/db/main.sqlite3'
+
+  with sqlite3.connect(db) as con:
+    con.row_factory = dict_factory
+    cur = con.cursor()
+
+    sql = '''
+    INSERT INTO
+      weekly_comment (date, comment)
+    VALUES
+      (?, ?)
+    '''
+    cur.execute(sql, (tm, comment))
+    con.commit()
+
+def save_ranking(tm, ranking):
+  home = os.environ.get('ASP_HOME', '/home/asp')
+  db = home + '/db/main.sqlite3'
+
+  with sqlite3.connect(db) as con:
+    con.row_factory = dict_factory
+    cur = con.cursor()
+
+    sql = '''
+    INSERT INTO
+      display_rank (date, rank, keyword)
+    VALUES
+      (?, ?, ?)
+    '''
+
+    for r in ranking:
+      cur.execute(sql, (tm, r['rank'], r['keyword']))
+    con.commit()
+  
