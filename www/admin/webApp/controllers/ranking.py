@@ -14,12 +14,12 @@ def save_ranking(tm, comment):
   rank = []
   for r in k:
     if r['rank'] <= 5:
-      if r['last_rank'] == '-' or r['last_rank'] == r['rank']:
-        rank.append({'rank': 'same', 'keyword': r['keyword']})
+      if r['last_rank'] == '-' or r['last_rank'] > r['rank']:
+        rank.append({'rank': 'up', 'keyword': r['keyword']})
       elif r['last_rank'] < r['rank']:
         rank.append({'rank': 'down', 'keyword': r['keyword']})
       else:
-        rank.append({'rank': 'up', 'keyword': r['keyword']})        
+        rank.append({'rank': 'same', 'keyword': r['keyword']})        
     else:
       break
   
