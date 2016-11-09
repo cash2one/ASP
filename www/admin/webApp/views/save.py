@@ -17,4 +17,4 @@ def display_save_total():
 
   controllers.ranking.save_ranking(tm, comment)
 
-  return flask.redirect('http://staging-asp.nne4fine.net/')
+  return flask.redirect('http://staging.圧倒的成長.com/')
