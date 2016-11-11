@@ -70,6 +70,8 @@ def generate_ranking(db_name):
     i = 1
     prev_point = 0
     for word, point in sorted(ranking.items(), key=lambda x:x[1],reverse=True):
+      if r['keyword'] in negative_word:
+        continue
       if prev_point != point:
         rank += i
         i = 1
