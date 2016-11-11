@@ -58,9 +58,14 @@ def generate_ranking(db_name):
     rows = cur.fetchall()
     for r in rows:
       if r['keyword'] in negative_word:
+        print(r['keyword'])
         continue
       if r['keyword'] in synonymous_word:
-        r['keyword'] = synonymous_word[r['keyword']]
+        s = synonymous_word[r['keyword']]
+        if s in negative_word:
+          print(r['keyword'], s)
+          continue
+        r['keyword'] = s
       if r['keyword'] in ranking:
         ranking[r['keyword']] += r['cnt']
       else:
@@ -70,7 +75,8 @@ def generate_ranking(db_name):
     i = 1
     prev_point = 0
     for word, point in sorted(ranking.items(), key=lambda x:x[1],reverse=True):
-      if r['keyword'] in negative_word:
+      if word in negative_word:
+        print(word)
         continue
       if prev_point != point:
         rank += i
