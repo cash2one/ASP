@@ -20,11 +20,15 @@ def render_json(rank, comment):
 def render_each(rank):
   home = os.environ.get('ASP_HOME', '/home/asp')
   index_html = home + '/www/staging/index.html'
-
+  error_html = home + '/www/staging/error.html'
   
   page = {}
   
   msg = flask.render_template('index.html', page=page)
   with open(index_html, 'w') as f:
+    f.write(msg)
+
+  msg = flask.render_template('error.html', page=page)
+  with open(error_html, 'w') as f:
     f.write(msg)
     
