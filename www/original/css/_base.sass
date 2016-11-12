@@ -1,0 +1,485 @@
+@import bourbon
+
+=tablet
+	@media screen and ( max-width: 1199px )
+		@content
+=mobile
+	@media screen and ( max-width: 767px )
+		@content
+
+=cf()
+	&:after
+		content: ""
+		display: table
+		clear: both
+=bg( $url, $position, $size )
+	background-repeat: no-repeat
+	background-image: url( $url )
+	background-position: $position
+	background-size: $size
+
+@font-face
+	font-family: "Makinas Scrap"
+	src: url( fonts/Makinas-Scrap-5.otf )
+$base-font: "Makinas Scrap", sans-serif
+@font-face
+	font-family: "Baloo Chettan"
+	src: url( fonts/Baloo-Chettan.ttf )
+@font-face
+	font-family: "Ubuntu Titling"
+	src: url( fonts/UbuntuTitling-Bold.ttf )
+
+$yellow: #F3BD39
+$green: #2BA496
+$pink: #DE297F
+$red: #E44835
+$lpurple: #594996
+$dpurple: #2A2A4F
+$black: #231F20
+$white: rgba( 255, 255, 255, 0.7 )
+
+*
+	box-sizing: border-box
+	margin: 0
+	padding: 0
+	line-height: 100%
+	font-family: $base-font
+a
+	text-decoration: none
+ul
+	list-style: none
+.mobile
+	display: none
+	+mobile
+		display: initial
+html
+	font-size: 62.5%
+body
+	color: $black
+	font-size: 1.6rem
+	background: $yellow
+	.container
+		margin: 0 auto
+		width: 110rem
+		+tablet
+			width: 70rem
+		+mobile
+			width: 95%
+		.boxes
+			+cf
+			.box
+				float: left
+				margin-right: 10rem
+				margin-bottom: 6rem
+				+mobile
+					margin-bottom: 5rem
+				&.on
+					.rank
+						+animation( spin 1s forwards 1 )
+						+keyframes( spin )
+							0%
+								+transform( rotateX( 90deg ) )
+							100%
+								+transform( rotateX( 1080deg ) )
+						&:nth-child(3)
+							+animation-delay( 0.1s )
+						&:nth-child(4)
+							+animation-delay( 0.2s )
+						&:nth-child(5)
+							+animation-delay( 0.3s )
+						&:nth-child(6)
+							+animation-delay( 0.4s )
+					//.rank
+						&:nth-child(3)
+							.word
+								+animation-delay( 0.1s )
+						&:nth-child(4)
+							.word
+								+animation-delay( 0.2s )
+						&:nth-child(5)
+							.word
+								+animation-delay( 0.3s )
+						&:nth-child(6)
+							.word
+								+animation-delay( 0.4s )
+						.word
+							+animation( spin 1s forwards 1 )
+							+keyframes( spin )
+								0%
+									+transform( rotateX( 90deg ) )
+								100%
+									+transform( rotateX( 1080deg ) )
+				&:last-child, &:nth-child(3n)
+					margin-right: 0
+				&:nth-child(3n)
+					+tablet
+						margin-right: 10rem
+				&:nth-child(2n)
+					+tablet
+						margin-right: 0
+				&.onethird
+					width: 30rem
+					+mobile
+						width: 100%
+				&.twothird
+					width: 70rem
+					+tablet
+						width: 30rem
+					+mobile
+						width: 100%
+				h3
+					margin-bottom: 1.5rem
+					color: $lpurple
+					font-size: 2.4rem
+					letter-spacing: 0.1rem
+					text-align: center
+					+mobile
+						font-size: 1.8rem
+				.rank
+					margin-bottom: 0.5rem
+					padding-left: 1.5rem
+					height: 4.6rem
+					font-size: 1.8rem
+					background: $white
+					+transform( rotateX( 90deg ) )
+					+mobile
+						font-size: 1.6rem
+					span
+						display: inline-block
+						line-height: 4.6rem
+						&.num
+							margin-right: 1rem
+						&.up
+							margin-right: 1rem
+							width: 1.6rem
+							height: 1.6rem
+							+bg( "/img/up.png", center center, cover )
+						&.same
+							margin-right: 1rem
+							width: 1.9rem
+							height: 1.4rem
+							+bg( "/img/same.png", center center, cover )
+						&.down
+							margin-right: 1rem
+							width: 1.6rem
+							height: 1.6rem
+							+bg( "/img/down.png", center center, cover )
+						//&.word
+							+transform( rotateX( 90deg ) )
+				p
+					margin-bottom: 0.5rem
+					padding: 2rem
+					height: 19.9rem
+					font-size: 1.8rem
+					line-height: 180%
+					background: $white
+					+mobile
+						height: auto
+						font-size: 1.6rem
+				ul
+					+cf
+					margin-bottom: 0.5rem
+					width: 100%
+					height: 4.6rem
+					font-size: 1.8rem
+					+mobile
+						display: table
+					&:after
+						+mobile
+							content: none
+					li
+						float: left
+						margin-right: 0.5rem
+						width: 7.1rem
+						height: 100%
+						line-height: 4.6rem
+						text-align: center
+						background: $white
+						+mobile
+							display: table-cell
+							float: none
+							margin-right: 0
+							width: 25.5%
+							border-right: 0.5rem solid $yellow
+						&:last-child
+							margin-right: 0
+							width: 7.2rem
+							+mobile
+								width: 23.5%
+								border-right: none
+						.fa-twitter
+							color: #22A4D9
+						.line
+							color: #54B05F
+							font-family: "Ubuntu Titling", sans-serif
+						.fa-facebook
+							color: #3D5793
+						.hatena
+							color: #248ACA
+							font-family: verdana, sans-serif
+							font-weight: bold
+	header
+		padding-top: 4rem
+		+mobile
+			padding-top: 2rem
+		.container
+			width: 90%
+			max-width: 130rem
+			h1
+				color: white
+				font-size: 1.4rem
+				+mobile
+					font-size: 1rem
+			p
+				font-family: "Baloo Chettan", sans-serif
+				letter-spacing: 0.15rem
+				+mobile
+					letter-spacing: 0
+				&.green
+					margin-top: 6rem
+					color: $green
+					font-size: 1.8rem
+					+mobile
+						margin-top: 2rem
+						font-size: 1.2rem
+				&.white
+					margin-top: 2rem
+					color: white
+					font-size: 2.8rem
+					line-height: 130%
+					+mobile
+						margin-top: 1rem
+						font-size: 1.8rem
+	footer
+		padding-bottom: 4rem
+		text-align: center
+		+mobile
+			padding-bottom: 2rem
+		.sns
+			h3
+				color: $green
+				font-family: "Baloo Chettan", sans-serif
+				font-size: 2.8rem
+				font-weight: normal
+				letter-spacing: 0.15rem
+				+mobile
+					font-size: 2rem
+			.icons
+				margin-top: 2.5rem
+				+mobile
+					margin-top: 2rem
+				a
+					margin: 0 1rem
+					+mobile
+						margin: 0 1.5rem
+					.fa
+						&.fa-twitter
+							color: #22A4D9
+							font-size: 3rem
+						&.fa-facebook
+							color: #3D5793
+							font-size: 2.6rem
+		nav
+			margin-top: 4rem
+			+mobile
+				margin-top: 3rem
+			ul
+				li
+					display: inline-block
+					color: $pink
+					font-size: 1.8rem
+					+mobile
+						font-size: 1.3rem
+						line-height: 180%
+					&:after
+						content: " |"
+						margin: 0 1rem
+						font-family: sans-serif
+						+mobile
+							content: none
+					&:last-child:after
+						content: none
+					a
+						color: $pink
+		.copyright
+			margin-top: 3rem
+			color: white
+			font-family: "Baloo Chettan", sans-serif
+			font-size: 1.8rem
+			letter-spacing: 0.15rem
+			+mobile
+				margin-top: 2rem
+				font-size: 1.1rem
+				line-height: 160%
+
+#menu
+	z-index: 1000
+	+position( fixed, 0 0 100% 0 )
+	&.open
+		bottom: 0
+		overflow: auto
+		.bg
+			.overlay
+				width: 250vmax
+				height: 250vmax
+				background: #40A85A
+		.switch
+			background: $white
+			.bar
+				background: $red
+				&:nth-child(1)
+					left: 46%
+					+transform( rotate( -45deg ) translateX( -50% ) )
+				&:nth-child(2)
+					opacity: 0
+					+transform( translateX( 0 ) )
+				&:nth-child(3)
+					left: 46%
+					+transform( rotate( 45deg ) translateX( -50% ) )
+		.container
+			visibility: visible
+			*
+				+transform( translateY( 0 ) )
+				opacity: 1
+				+transition( all 0.6s ease )
+			$start: 0.4s
+			$diff: 0.1s
+			h3
+				+transition-delay( #{$start} )
+			p
+				+transition-delay( #{$start+($diff*1)} )
+			ul
+				li
+					+transition-delay( #{$start+($diff*2)} )
+			.bottom
+				.sns
+					h3
+						+transition-delay( #{$start+($diff*3)} )
+					.icons
+						+transition-delay( #{$start+($diff*4)} )
+				.copyright
+					+transition-delay( #{$start+($diff*5)} )
+	.bg
+		z-index: 1100
+		position: fixed
+		top: 5rem
+		+calc( left, "10% + 125.4rem" )
+		@media screen and ( max-width: 1626px )
+			+calc( left, "50% + 60rem" )
+		@media screen and ( max-width: 1450px )
+			left: initial
+			right: 5%
+		width: 4.6rem
+		height: 4.6rem
+		+mobile
+			top: 2rem
+		.overlay
+			+position( absolute, 50% null null 50% )
+			+transform( translate( -50%, -50% ) )
+			width: 4.6rem
+			height: 4.6rem
+			border-radius: 50%
+			background: $white
+			+transition( all 0.8s ease )
+	.switch
+		z-index: 1300
+		position: fixed
+		top: 5rem
+		+calc( left, "10% + 125.4rem" )
+		@media screen and ( max-width: 1626px )
+			+calc( left, "50% + 60rem" )
+		@media screen and ( max-width: 1450px )
+			left: initial
+			right: 5%
+		width: 4.6rem
+		height: 4.6rem
+		border-radius: 50%
+		background: rgba( 255, 255, 255, 0 )
+		cursor: pointer
+		+transition( all 0.8s ease )
+		+mobile
+			top: 2rem
+		.bar
+			position: absolute
+			left: 50%
+			+transform( translateX( -50% ) )
+			width: 1.4rem
+			height: 0.2rem
+			background: $yellow
+			+transition( all 0.6s ease )
+			&:nth-child(1)
+				top: 1.7rem
+			&:nth-child(2)
+				top: 2.2rem
+			&:nth-child(3)
+				top: 2.7rem
+	.container
+		z-index: 1200
+		+position( absolute, 0 null null 50% )
+		+transform( translateX( -50% ) )
+		width: 32rem
+		min-height: 100vh
+		visibility: hidden
+		+mobile
+			width: 100%
+			padding: 0 5%
+		*
+			+transform( translateY( 3rem ) )
+			color: white
+			opacity: 0
+			+transition-property( none )
+		h3
+			margin-top: 9rem
+			font-size: 2.2rem
+			letter-spacing: 0.1rem
+			+mobile
+				margin-top: 6rem
+				font-size: 1.4rem
+		p
+			margin-top: 2rem
+			padding: 2rem
+			color: $red
+			font-size: 1.8rem
+			line-height: 180%
+			background: $white
+			+mobile
+				padding: 1.5rem
+				font-size: 1.2rem
+		ul
+			margin-top: 3rem
+			li
+				margin-top: 2rem
+				font-size: 2rem
+				+mobile
+					font-size: 1.4rem
+				&:before
+					content: "# "
+		.bottom
+			+position( absolute, null 0 0 0 )
+			padding-bottom: 4rem
+			text-align: center
+			+mobile
+				position: relative
+				padding-bottom: 2rem
+			.sns
+				h3
+					font-family: "Baloo Chettan", sans-serif
+					font-size: 1.8rem
+					font-weight: normal
+					letter-spacing: 0.15rem
+					+mobile
+						margin-top: 5rem
+				.icons
+					margin-top: 2rem
+					a
+						margin: 0 1rem
+					.fa
+						&.fa-twitter
+							font-size: 3rem
+						&.fa-facebook
+							font-size: 2.8rem
+			.copyright
+				margin-top: 2rem
+				font-family: "Baloo Chettan", sans-serif
+				font-size: 1.2rem
+				letter-spacing: 0.15rem
