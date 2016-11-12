@@ -1,18 +1,12 @@
 $(document).ready(function(){
 	var data = [
-		"一言、二言",
+		"圧倒的成長が、未だに圧倒的１位に君臨ちう。ゼロからつくれることが段々少なくなってきたのか、、、。",
 		[
-				
-				{ t:"same", w:"自社開発" },
-				
-				{ t:"same", w:"急募" },
-				
-				{ t:"same", w:"歓迎" },
-				
-				{ t:"same", w:"大募集" },
-				
-				{ t:"same", w:"お任せします" },
-				
+			{ t:"same", w:"圧倒的成長" },
+			{ t:"up", w:"海外インターン" },
+			{ t:"down", w:"ゼロからつくる" },
+			{ t:"same", w:"戦略的な" },
+			{ t:"same", w:"第一人者" }
 		]
 	];
 	$(".boxes.weekly .onethird p, #menu p").html(data[0]);
