@@ -168,12 +168,12 @@ def save_ranking(tm, ranking):
 
     sql = '''
     INSERT INTO
-      display_rank (date, rank, keyword)
+      display_rank (date, rank, last_rank, keyword)
     VALUES
-      (?, ?, ?)
+      (?, ?, ?, ?)
     '''
 
     for r in ranking:
-      cur.execute(sql, (tm, r['rank'], r['keyword']))
+      cur.execute(sql, (tm, r['rank'], r['last_rank'], r['keyword']))
     con.commit()
   
