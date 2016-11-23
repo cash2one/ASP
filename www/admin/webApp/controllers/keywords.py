@@ -58,9 +58,9 @@ def get_total_rank():
     keyword[w['keyword']]['point'] += w['point']
     
   last_rank = {}
-  keyword2 = {}#models.maindb.latest_rank()
+  keyword2 = models.maindb.get_latest_rank()
   for k in keyword2:
-    last_rank[k['keyword']] = k['rank']
+    last_rank[k] = keyword2[k]
 
   for k in keyword:
     keyword[k]['last_rank'] = last_rank.get(k, '-')

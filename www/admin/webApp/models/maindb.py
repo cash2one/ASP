@@ -80,17 +80,32 @@ def get_latest_rank():
     SELECT
      distinct date
     FROM
-     display_rank
+     public_date
     ORDER BY date DESC
     LIMIT 1
     '''
-  
-    cur.execute(sql)
-    date = cur.fetchone()
-    print(date)
 
-    if date is None:
-      pass
+    cur.execute(sql)
+    date = cur.fetchone()['date']
+
+    sql = '''
+    SELECT
+      rank,
+      keyword
+    FROM
+      display_rank
+    WHERE
+      date = ?
+    '''
+    cur.execute(sql, (date,))
+    rows = cur.fetchall()
+    
+    rank = {}
+    for r in rows:
+      print(r['keyword'], r['rank'])
+      rank[r['keyword']] = r['rank']
+
+    return rank
 
 def remove_comment(tm):
   home = os.environ.get('ASP_HOME', '/home/asp')
