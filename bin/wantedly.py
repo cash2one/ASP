@@ -52,14 +52,14 @@ if __name__ == '__main__':
   if os.path.isdir(home + '/db/{year:04d}'.format(year=now.year)) is False:
     os.makedirs(home + '/db/{year:04d}'.format(year=now.year))
     
-  db = home + '/db/{year:04d}/{year:04d}_{week:02d}_green.sqlite3'.format(year=now.year, week=now.isocalendar()[1])
+  db = home + '/db/{year:04d}/{year:04d}_{week:02d}_wantedly.sqlite3'.format(year=now.year, week=now.isocalendar()[1])
   maindb = home + '/db/main.sqlite3'
   
   if os.path.exists(db):
     os.unlink(db)
 
-  crawler = home + '/crawler/green.py'
-  extractor = home + '/keyword/extracor.py'
+  crawler = home + '/crawler/wantedly.py'
+  extractor = home + '/keyword/extractor.py'
   ranker = home + '/ranking/generator.py'
   
   # Crawlerの起動
@@ -75,7 +75,7 @@ if __name__ == '__main__':
     cur = con.cursor()
 
     sql = '''
-    INSERT INTO crawl_history (site, date, year, woy, path) VALUES ('green', ?, ?, ?, ?);
+    INSERT INTO crawl_history (site, date, year, woy, path) VALUES ('wantedly', ?, ?, ?, ?);
     '''
     cur.execute(sql, (datetime.date(year=now.year, month=now.month, day=now.day), now.year, now.isocalendar()[1], db))
 
