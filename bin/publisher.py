@@ -74,7 +74,7 @@ if __name__ == '__main__':
   rank, comment = get_rank_comment()
   if rank is not None:
     tpl = env.get_template('common.js')
-    common_js = home + '/www/staging/js/common.js'
+    common_js = home + '/www/public/js/common.js'
     
     page = {'rank': rank,
             'comment': comment}
