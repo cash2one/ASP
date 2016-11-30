@@ -17,6 +17,7 @@ URL = 'https://www.green-japan.com'
 url_base = 'https://www.green-japan.com/search/01?page={}'
 _re_job = re.compile('/job/(?P<job_id>[0-9]+)')
 _re_comp = re.compile('/company/(?P<comp_id>[0-9]+)?.*')
+_re_position = re.compile('(?P<pos>.*)の求人')
 
 def dict_factory(cursor, row):
   d = {}
@@ -35,6 +36,7 @@ def setup_database(db_name):
       green_id BIGINT UNSIGNED NOT NULL,
       salary_id BIGINT UNSIGNED,
       company_id BIGINT UNSIGNED NOT NULL,
+      position_id BIGINT UNSIGNED NOT NULL,
       title TEXT NOT Null
     )
     '''
@@ -48,6 +50,14 @@ def setup_database(db_name):
     '''
     cur.execute(sql)
 
+    sql = '''
+    CREATE TABLE position (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      description VARCHAR(128) UNIQUE NOT NULL
+    )
+    '''
+    cur.execute(sql)
+    
     sql = '''
     CREATE TABLE offer_site (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -181,6 +191,14 @@ def save_database(db, offer):
       cur.execute('''UPDATE company SET name = ?, short_description = ? WHERE green_id = ?;''', (offer['company_name'], offer['company_desc'], offer['company_id']))
     comapny_id = r['id']
 
+    cur.execute('''SELECT id FROM position WHERE description = ?; ''', (offer['position'],))
+    r = cur.fetchone()
+    if r is None:
+      cur.execute('''INSERT INTO position (description) VALUES (?); ''', (offer['position'],))
+      cur.execute('''SELECT id FROM position WHERE description = ?; ''', (offer['position'],))
+      r = cur.fetchone()
+    pos_id = r['id']
+    
     if offer['income'] is not None:
       cur.execute('''SELECT id FROM salary WHERE description = ?; ''', (offer['income'],))
       r = cur.fetchone()
@@ -195,7 +213,7 @@ def save_database(db, offer):
     cur.execute('''SELECT id FROM offer WHERE green_id = ?; ''', (offer['job_id'], ))
     r = cur.fetchone()
     if r is None:
-      cur.execute('''INSERT INTO offer (green_id, salary_id, company_id, title) VALUES (?, ?, ?, ?); ''', (offer['job_id'], salary_id, comapny_id, offer['title']))
+      cur.execute('''INSERT INTO offer (green_id, salary_id, company_id, position_id, title) VALUES (?, ?, ?, ?, ?); ''', (offer['job_id'], salary_id, comapny_id, pos_id, offer['title']))
       cur.execute('''SELECT id FROM offer WHERE green_id = ?; ''', (offer['job_id'],))
       r = cur.fetchone()
     else:
@@ -328,6 +346,11 @@ def parse_page(db, url):
   offer = {}
   root = pq(req.text.encode('utf-8'))
 
+  for i, a in enumerate(root('div#content.content ul#pan li a').items()):
+    if i == 2:
+      _m = _re_position.search(a.text())
+      offer['position'] = _m.group('pos')
+  
   offer['job_id'] = _re_job.search(root('li#com_menu_job_detail a').attr['href']).group('job_id')
   offer['company_id'] = _re_comp.search(root('li#com_menu_com_detail a').attr['href']).group('comp_id')
 
