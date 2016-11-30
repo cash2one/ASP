@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<form action="/Tools/raw/title/{{ page.db }}" method="POST">
+	<select name="history">
+		{% for history in page.histories %}
+		<option value="{{ history.id|safe }}"{% if history.id == page.date_id %} SELECTED{% endif %}>{{history.date|safe}}</option>
+		{% endfor %}
+	</select>
+	<input type="submit" value="表示">
+</form>
+
+<table>
+	<caption> {{ page.title }}</caption>
+	<tbody>
+		{% for keyword in page.keywords %}
+		<tr>
+			<td>{{ keyword.title|safe }}</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+
+
+{% endblock %}

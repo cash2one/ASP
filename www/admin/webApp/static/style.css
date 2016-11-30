@@ -1,4 +1,4 @@
-a {
+nav a {
 		border-radius: 6px 6px 0 0;
 		display: inline-block;
 		line-height: 32px;
@@ -11,10 +11,10 @@ a {
 		padding: 0 32px;
 }
 
-a:nth-child(1) { border-top: 6px solid tomato; }
-a:nth-child(3) { border-top: 6px solid steelblue; }
-a:nth-child(2) { border-top: 6px solid gold; }
-a:nth-child(4) { border-top: 6px solid teal; }
+nav a:nth-child(1) { border-top: 6px solid tomato; }
+nav a:nth-child(3) { border-top: 6px solid steelblue; }
+nav a:nth-child(2) { border-top: 6px solid gold; }
+nav a:nth-child(4) { border-top: 6px solid teal; }
 
 .content {
 		border: 1px solid lightgray;
