@@ -68,6 +68,47 @@ def get_rank(db, limit=1500):
       ret.append({'rank': r['rank'], 'keyword': r['keyword'], 'point': 10.*(r['point'] - avg) / sd + 50, 'no': r['rowid']})
   return ret
 
+def get_rank_pos(db, pos, limit=1500):
+  ret = []
+
+  with sqlite3.connect(db) as con:
+    con.row_factory = dict_factory
+    con.create_aggregate("stdev", 1, StdevFunc)
+    cur = con.cursor()
+
+    sql = '''
+    SELECT
+      avg(point) AS avg,
+      stdev(point) AS sd
+    FROM
+     {}_ranking
+    '''
+    sql = sql.format(pos)
+    cur.execute(sql)
+    r = cur.fetchone()
+    avg = r['avg']
+    sd = r['sd']
+    
+    sql = '''
+    SELECT
+      rowid,
+      rank,
+      keyword,
+      point
+    FROM
+      {}_ranking
+    WHERE
+      rank <= ?
+    '''
+    sql = sql.format(pos)
+    cur.execute(sql, (limit, ))
+
+    rows = cur.fetchall()
+    for r in rows:
+      ret.append({'rank': r['rank'], 'keyword': r['keyword'], 'point': 10.*(r['point'] - avg) / sd + 50, 'no': r['rowid']})
+  return ret
+
+  
 def get_title(db):
   ret = []
 

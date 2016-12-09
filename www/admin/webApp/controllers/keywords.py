@@ -95,3 +95,59 @@ def get_total_rank():
     prev_point = k['point']
     
   return ret
+
+def get_pos_rank():
+  kind = ['engineer', 'sales', 'consul', 'designer', 'other']
+  ret = {}
+  for k_pos in kind:
+    r = models.maindb.crawl_history("green", 1)
+    green_keyword = models.sitedb.get_rank_pos(r[0]['path'], k_pos)
+    r = models.maindb.crawl_history("wantedly", 1)
+    wantedly_keyword = models.sitedb.get_rank_pos(r[0]['path'], k_pos)
+    # {'rank': r['rank'], 'keyword': r['keyword'], 'point': r['point'], 'no': r['rowid']}
+
+    keyword = {}
+    for w in green_keyword:
+      if w['keyword'] not in keyword:
+        keyword[w['keyword']] = {'keyword': w['keyword'],
+                                 'point': 0}
+
+      keyword[w['keyword']]['point'] += w['point']
+
+    for w in wantedly_keyword:
+      if w['keyword'] not in keyword:
+        keyword[w['keyword']] = {'keyword': w['keyword'],
+                                 'point': 0}
+
+      keyword[w['keyword']]['point'] += w['point']
+
+
+    last_rank = {}
+    keyword2 = models.maindb.get_latest_rank_pos(k_pos)
+    for k in keyword2:
+      last_rank[k] = keyword2[k]
+
+    for k in keyword:
+      keyword[k]['last_rank'] = last_rank.get(k, '-')
+
+    r = []
+    for k in keyword:
+      r.append(keyword[k])
+
+    ret2 = [] 
+
+    prev_point = 0
+    rank = 0
+    i = 1
+    for k in sorted(r, key=lambda x:x['point'], reverse=True):
+      if prev_point != k['point']:
+        rank += i
+        i = 1
+      else:
+        i += 1
+      k['rank'] = rank
+      ret2.append(k)
+      prev_point = k['point']
+    ret[k_pos] = ret2
+
+  return ret

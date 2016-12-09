@@ -4,6 +4,7 @@ import logging
 import os
 import datetime
 import sqlite3
+import sys
 
 from slack_log_handler import SlackLogHandler
 
@@ -45,6 +46,7 @@ logger.addHandler(slack)
 
 
 if __name__ == '__main__':
+  logger.info('Wantedly 開始しました')  
   # Pathの決定
   home = os.environ.get('ASP_HOME', '/home/asp')
   now = datetime.datetime.utcnow() + datetime.timedelta(hours=9)
@@ -61,15 +63,29 @@ if __name__ == '__main__':
   crawler = home + '/crawler/wantedly.py'
   extractor = home + '/keyword/extractor.py'
   ranker = home + '/ranking/generator.py'
+  ranker_pos = home + '/ranking/generator_position.py'
   
   # Crawlerの起動
-  subprocess.check_call(['/usr/bin/env', 'python3', crawler, db])
-
+  try:
+    subprocess.check_call(['/usr/bin/env', 'python3', crawler, db])
+  except:
+    logger.error('Wantedly Crawlerが失敗しました')
+    sys.exit(1)
+    
   # Extractorの起動
-  subprocess.check_call(['/usr/bin/env', 'python3', extractor, db])
-
+  try:
+    subprocess.check_call(['/usr/bin/env', 'python3', extractor, db])
+  except:
+    logger.error('Wantedly Crawlerが失敗しました')
+    sys.exit(2)
+    
   # Rankerの起動
-  subprocess.check_call(['/usr/bin/env', 'python3', ranker, db])
+  try:
+    subprocess.check_call(['/usr/bin/env', 'python3', ranker, db])
+    subprocess.check_call(['/usr/bin/env', 'python3', ranker_pos, db])    
+  except:
+    logger.error('Wantedly Rankerが失敗しました')
+    sys.exit(3)
 
   with sqlite3.connect(maindb) as con:
     cur = con.cursor()
@@ -80,5 +96,5 @@ if __name__ == '__main__':
     cur.execute(sql, (datetime.date(year=now.year, month=now.month, day=now.day), now.year, now.isocalendar()[1], db))
 
     con.commit()
-
+  logger.info('Wantedly 終了しました')
   

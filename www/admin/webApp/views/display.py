@@ -9,9 +9,11 @@ import webApp.controllers as controllers
 def views_display():
   if flask.request.args.get('action', None) == 'determine':
     keywords = controllers.keywords.get_total_rank()
-  
+    positions = controllers.keywords.get_pos_rank()
+    
     page = {'page': 'total',
-            'keywords': keywords
+            'keywords': keywords,
+            'positions': positions
           }
   else:
     page = {'page': None}

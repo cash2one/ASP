@@ -24,7 +24,7 @@ def render_each(rank):
   
   page = {}
   
-  msg = flask.render_template('index.html', page=page)
+  msg = flask.render_template('index.html', ranking=rank)
   with open(index_html, 'w') as f:
     f.write(msg)
 

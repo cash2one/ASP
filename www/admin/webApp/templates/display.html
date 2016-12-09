@@ -36,6 +36,32 @@
 	</table>
 	<input type="hidden" name="date_id" value="{{ page.date_id }}">
 </form>
+{% for pos in page.positions %}
+<h1>{{ pos }}</h1>
+<table>
+	<thead>
+		<tr>
+			<th>Rank</th>
+			<th>先週のRank</th>
+			<th>キーワード</th>
+			<th>ポイント</th>
+			<!-- <th>有効</th> -->
+		</tr>
+	</thead>
+	<tbody>
+		{% for keyword in page.positions[pos] %}
+		<tr>
+			<th>{{ keyword.rank|safe }}</th>
+			<th>{{ keyword.last_rank|safe }}</th>
+			<td>{{ keyword.keyword|safe }}</td>
+			<td>{{ keyword.point|safe }}</td>
+			<!-- <td><input type="checkbox" name="valid" value="{{ keyword.no }}" checked></input></td> -->
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+{% endfor %}
+
 {% endif %}
 
 {% endblock %}

@@ -64,7 +64,7 @@ def setup_database(db_name):
     sql = '''
     CREATE TABLE position (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
-      name TEXT NOT NULL UNIQUE
+      description TEXT NOT NULL UNIQUE
     );
     '''
     cur.execute(sql)
@@ -171,11 +171,11 @@ def save_database(db, offer):
       r = cur.fetchone()
     cid = r['id']
 
-    cur.execute('''SELECT id FROM position WHERE name = ?;''', (offer['job']['kind'],))
+    cur.execute('''SELECT id FROM position WHERE description = ?;''', (offer['job']['kind'],))
     r = cur.fetchone()
     if r is None:
-      cur.execute('''INSERT INTO position (name) VALUES (?);''', (offer['job']['kind'],))
-      cur.execute('''SELECT id FROM position WHERE name = ?;''', (offer['job']['kind'],))
+      cur.execute('''INSERT INTO position (description) VALUES (?);''', (offer['job']['kind'],))
+      cur.execute('''SELECT id FROM position WHERE description = ?;''', (offer['job']['kind'],))
       r = cur.fetchone()
     kid = r['id']
 

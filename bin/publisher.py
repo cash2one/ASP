@@ -23,6 +23,23 @@ def get_rank_comment():
   
   db = home + '/db/main.sqlite3'
   rank = []
+  rank_pos = [{'name': '殿堂',
+               'rank': [
+                 {'rank': 'same', 'keyword': '世界'},
+                 {'rank': 'same', 'keyword': 'しませんか'},
+                 {'rank': 'same', 'keyword': '一緒'},
+                 {'rank': 'same', 'keyword': '成長'},
+                 {'rank': 'same', 'keyword': '活躍'},
+               ]
+             }]
+  names = {
+    'engineer': 'エンジニア系',
+    'designer': 'デザイナー系',
+    'sales': '営業系',
+    'consul': 'コンサルタント系',
+    'other': 'その他',
+  }
+  
   with sqlite3.connect(db) as con:
     con.row_factory = dict_factory
     cur = con.cursor()
@@ -51,6 +68,39 @@ def get_rank_comment():
           rank.append({'rank': 'same', 'keyword': r['keyword']})        
       else:
         break
+    for p in ['engineer', 'designer', 'sales', 'consul', 'other']:
+      rr = {'name': names[p],
+            'rank': []
+      }
+      sql = '''
+      SELECT
+       rank,
+       last_rank,
+       keyword
+      FROM
+       display_rank_{}
+      WHERE
+       date = ?
+      ORDER BY rank
+      LIMIT 5;
+      '''
+      sql = sql.format(p)
+      cur.execute(sql, (date,))
+      
+      rows = cur.fetchall()
+      for r in rows:
+        if r['rank'] <= 5:
+          if r['last_rank'] == '-' or r['last_rank'] > r['rank']:
+            rr['rank'].append({'rank': 'up', 'keyword': r['keyword']})
+          elif r['last_rank'] < r['rank']:
+            rr['rank'].append({'rank': 'down', 'keyword': r['keyword']})
+          else:
+            rr['rank'].append({'rank': 'same', 'keyword': r['keyword']})        
+        else:
+          break
+      rank_pos.append(rr)
+      
+        
     sql = '''
     SELECT
      comment
@@ -68,10 +118,10 @@ def get_rank_comment():
 
     if len(rank) == 0:
       rank = None
-  return rank, comment
+  return rank, rank_pos, comment
   
 if __name__ == '__main__':
-  rank, comment = get_rank_comment()
+  rank, rank_pos, comment = get_rank_comment()
   if rank is not None:
     tpl = env.get_template('common.js')
     common_js = home + '/www/public/js/common.js'
@@ -81,5 +131,30 @@ if __name__ == '__main__':
     msg = tpl.render(page=page)
     with open(common_js, 'w') as f:
       f.write(msg)
-                         
-    
+
+    tpl = env.get_template('index.html')
+    index_html = home + '/www/public/index.html'
+    msg = tpl.render(ranking=rank_pos)
+    with open(index_html, 'w') as f:
+      f.write(msg)
+
+    tpl = env.get_template('error.html')
+    error_html = home + '/www/public/error.html'
+    msg = tpl.render(ranking=rank_pos)
+    with open(error_html, 'w') as f:
+      f.write(msg)
+      
+    tm = datetime.datetime.utcnow() + datetime.timedelta(hours=9)
+    date = datetime.date(year=tm.year, month=tm.month, day=tm.day)
+  
+    db = home + '/db/main.sqlite3'
+    rank = []
+    with sqlite3.connect(db) as con:
+      con.row_factory = dict_factory
+      cur = con.cursor()
+
+      sql = '''INSERT INTO public_date (date) VALUES (?); '''
+      cur.execute(sql, (date, ))
+      con.commit()
+
+      
