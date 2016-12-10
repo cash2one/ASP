@@ -3,6 +3,8 @@ import datetime
 
 import webApp.models as models
 
+palace_words = ['世界', 'しませんか', '一緒', '成長', '活躍']
+
 def get(site):
   r = models.maindb.crawl_history(site, 2)
   #r = [{'date': datetime.date(year=2016, month=10, day=22), 'path': '/home/kawasaki/asp/db/green_2016_42.sqlite3'}]
@@ -53,6 +55,8 @@ def get_total_rank():
 
   keyword = {}
   for w in green_keyword:
+    if w in palace_words:
+      continue
     if w['keyword'] not in keyword:
       keyword[w['keyword']] = {'keyword': w['keyword'],
                                'point': 0}
@@ -60,6 +64,8 @@ def get_total_rank():
     keyword[w['keyword']]['point'] += w['point']
 
   for w in wantedly_keyword:
+    if w in palace_words:
+      continue
     if w['keyword'] not in keyword:
       keyword[w['keyword']] = {'keyword': w['keyword'],
                                'point': 0}
@@ -108,6 +114,8 @@ def get_pos_rank():
 
     keyword = {}
     for w in green_keyword:
+      if w in palace_words:
+        continue
       if w['keyword'] not in keyword:
         keyword[w['keyword']] = {'keyword': w['keyword'],
                                  'point': 0}
@@ -115,6 +123,8 @@ def get_pos_rank():
       keyword[w['keyword']]['point'] += w['point']
 
     for w in wantedly_keyword:
+      if w in palace_words:
+        continue
       if w['keyword'] not in keyword:
         keyword[w['keyword']] = {'keyword': w['keyword'],
                                  'point': 0}
