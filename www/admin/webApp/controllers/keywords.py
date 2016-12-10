@@ -55,7 +55,7 @@ def get_total_rank():
 
   keyword = {}
   for w in green_keyword:
-    if w in palace_words:
+    if w['keyword'] in palace_words:
       continue
     if w['keyword'] not in keyword:
       keyword[w['keyword']] = {'keyword': w['keyword'],
@@ -64,7 +64,7 @@ def get_total_rank():
     keyword[w['keyword']]['point'] += w['point']
 
   for w in wantedly_keyword:
-    if w in palace_words:
+    if w['keyword'] in palace_words:
       continue
     if w['keyword'] not in keyword:
       keyword[w['keyword']] = {'keyword': w['keyword'],
@@ -103,6 +103,14 @@ def get_total_rank():
   return ret
 
 def get_pos_rank():
+  total_rank = []
+  t = get_total_rank()
+  for r in t:
+    if r['rank'] <= 5:
+      total_rank.append(r['keyword'])
+    else:
+      continue
+  
   kind = ['engineer', 'sales', 'consul', 'designer', 'other']
   ret = {}
   for k_pos in kind:
@@ -114,7 +122,9 @@ def get_pos_rank():
 
     keyword = {}
     for w in green_keyword:
-      if w in palace_words:
+      if w['keyword'] in palace_words:
+        continue
+      if w['keyword'] in total_rank:
         continue
       if w['keyword'] not in keyword:
         keyword[w['keyword']] = {'keyword': w['keyword'],
@@ -124,6 +134,8 @@ def get_pos_rank():
 
     for w in wantedly_keyword:
       if w in palace_words:
+        continue
+      if w in total_rank:
         continue
       if w['keyword'] not in keyword:
         keyword[w['keyword']] = {'keyword': w['keyword'],
