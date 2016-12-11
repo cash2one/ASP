@@ -61,7 +61,7 @@ if __name__ == '__main__':
     os.unlink(db)
 
   crawler = home + '/crawler/green.py'
-  extractor = home + '/keyword/extracor.py'
+  extractor = home + '/keyword/extractor.py'
   ranker = home + '/ranking/generator.py'
   ranker_pos = home + '/ranking/generator_position.py'
   
@@ -76,7 +76,7 @@ if __name__ == '__main__':
   try:
     subprocess.check_call(['/usr/bin/env', 'python3', extractor, db])
   except:
-    logger.error('Green Crawlerが失敗しました')
+    logger.error('Green Extractorが失敗しました')
     sys.exit(2)
     
   # Rankerの起動
