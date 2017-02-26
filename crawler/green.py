@@ -338,8 +338,10 @@ def save_database(db, offer):
     print(offer_id, offer['job_id'])
     con.commit()
   
-def parse_page(db, url):
-  req = requests.get(url)
+def parse_page(db, url, session):
+  if url == 'https://www.green-japan.com/job/37473':
+    return
+  req = session.get(url)
   if req.status_code != 200:
     return False
     
@@ -406,10 +408,40 @@ def parse_page(db, url):
   save_database(db, offer)
   time.sleep(1)
 
+def login(session):
+  req = session.get('https://www.green-japan.com/login')
+  if req.status_code != 200:
+    return None
+  root = pq(req.text.encode('utf-8'))
+  utf8 = '✓'
+  seacret_key = root('form#new_user.new_user input#authenticity_token').attr('value')
+  for r in root('form#new_user.new_user div input'):
+    if r.attrib['name'] == 'utf8':
+      utf8 = r.value
+    elif r.attrib['name'] == 'authenticity_token':
+      seacret_key = r.value
+  d = {
+    'authenticity_token': seacret_key,
+    'utf8': utf8,
+    'user[mail]': 'asproject.poem@gmail.com',
+    'user[password]': 'attouteki',
+    'user[auto_login_flg]': 1,
+    'commit': 'ログイン',
+    'target_url': 'https://www.green-japan.com/',
+  }
+  req = session.post('https://www.green-japan.com/create', data=d)
+
+def logout(session):
+  req = session.get('https://www.green-japan.com/logout')
+  
 def crawl_main(db):
+  user_agent = {'User-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_3) AppleWebKit/602.4.8 (KHTML, like Gecko) Version/10.0.3 Safari/602.4.8'}
+  s = requests.session()
+  logout(s)
+  login(s)
   page = 1
   while True:
-    req = requests.get(url_base.format(page))
+    req = requests.get(url_base.format(page), headers=user_agent)
     if req.status_code != 200:
       break
 
@@ -417,12 +449,13 @@ def crawl_main(db):
     page_num = 0
     for comp in root('div.card-info__wrapper a').items():
       page_num += 1
-      parse_page(db, URL + comp.attr['href'])
+      parse_page(db, URL + comp.attr['href'], s)
     page += 1
 
     if page_num == 0:
       break
     time.sleep(10)
+  login(s)
 
 
 if __name__ == '__main__':
