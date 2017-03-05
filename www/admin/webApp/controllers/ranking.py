@@ -45,7 +45,7 @@ def save_ranking(tm, comment):
     'change': '新規注目'
   }
   
-  for p in ['engineer', 'designer', 'sales', 'consul', 'change']:
+  for p in ['change', 'engineer', 'designer', 'sales', 'consul']:
     rr = {'name': names[p],
           'rank': []
     }
