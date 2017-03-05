@@ -104,8 +104,8 @@ def get_total_rank():
 
 def get_pos_rank():
   total_rank = []
-  t = get_total_rank()
-  for r in t:
+  total = get_total_rank()
+  for r in total:
     if r['rank'] <= 5:
       total_rank.append(r['keyword'])
     else:
@@ -172,4 +172,33 @@ def get_pos_rank():
       prev_point = k['point']
     ret[k_pos] = ret2
 
+  ret2 = []
+  for r in total:
+    if r['rank'] > 200:
+      continue
+    try:
+      point = r['last_rank'] - r['rank']
+    except:
+      point = 999
+    r['point'] = point
+    ret2.append(r)
+    
+  prev_point = 0
+  rank = 0
+  i = 1
+  ret3 = []
+  for k in sorted(ret2, key=lambda x:x['point'], reverse=True):
+    if prev_point != k['point']:
+      rank += i
+      i = 1
+    else:
+      i += 1
+    k['rank'] = rank
+    ret3.append(k)
+    prev_point = k['point']
+  ret['change'] = ret3
+  
+      
+  
+    
   return ret
