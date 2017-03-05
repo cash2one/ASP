@@ -9,6 +9,8 @@ import webApp.controllers as controllers
 @app.route('/save_total', methods=['POST'])
 def display_save_total():
   comment = flask.request.form['hitokoto']
+  comment = comment.replace('\n', '')
+  comment = comment.replace('\r', '')  
   year = flask.request.form['year']
   month = flask.request.form['month']
   day = flask.request.form['day']
