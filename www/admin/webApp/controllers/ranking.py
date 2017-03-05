@@ -42,22 +42,30 @@ def save_ranking(tm, comment):
     'sales': '営業系',
     'consul': 'コンサルタント系',
     'other': 'その他',
+    'change': '新規注目'
   }
   
-  for p in ['engineer', 'designer', 'sales', 'consul', 'other']:
+  for p in ['engineer', 'designer', 'sales', 'consul', 'change']:
     rr = {'name': names[p],
           'rank': []
     }
-    for r in k2[p]:
-      if r['rank'] <= 5:
-        if r['last_rank'] == '-' or r['last_rank'] > r['rank']:
+    if p == 'change':
+      for r in k2[p]:
+        if r['rank'] <= 5:
           rr['rank'].append({'rank': 'up', 'keyword': r['keyword']})
-        elif r['last_rank'] < r['rank']:
-          rr['rank'].append({'rank': 'down', 'keyword': r['keyword']})
         else:
-          rr['rank'].append({'rank': 'same', 'keyword': r['keyword']})        
-      else:
-        break
+          break
+    else:
+      for r in k2[p]:
+        if r['rank'] <= 5:
+          if r['last_rank'] == '-' or r['last_rank'] > r['rank']:
+            rr['rank'].append({'rank': 'up', 'keyword': r['keyword']})
+          elif r['last_rank'] < r['rank']:
+            rr['rank'].append({'rank': 'down', 'keyword': r['keyword']})
+          else:
+            rr['rank'].append({'rank': 'same', 'keyword': r['keyword']})        
+        else:
+          break
     rank.append(rr)
         
   models.template.render_each(rank)
