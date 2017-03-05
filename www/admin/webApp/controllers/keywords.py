@@ -174,7 +174,7 @@ def get_pos_rank():
 
   ret2 = []
   for r in total:
-    if r['rank'] > 200:
+    if r['rank'] > 100:
       continue
     try:
       point = r['last_rank'] - r['rank']
@@ -198,7 +198,4 @@ def get_pos_rank():
     prev_point = k['point']
   ret['change'] = ret3
   
-      
-  
-    
   return ret
