@@ -38,6 +38,7 @@ def get_rank_comment():
     'sales': '営業系',
     'consul': 'コンサルタント系',
     'other': 'その他',
+    'change': '新規注目',
   }
   
   with sqlite3.connect(db) as con:
@@ -68,7 +69,7 @@ def get_rank_comment():
           rank.append({'rank': 'same', 'keyword': r['keyword']})        
       else:
         break
-    for p in ['engineer', 'designer', 'sales', 'consul', 'other']:
+    for p in ['change', 'engineer', 'designer', 'sales', 'consul']:
       rr = {'name': names[p],
             'rank': []
       }
@@ -88,16 +89,23 @@ def get_rank_comment():
       cur.execute(sql, (date,))
       
       rows = cur.fetchall()
-      for r in rows:
-        if r['rank'] <= 5:
-          if r['last_rank'] == '-' or r['last_rank'] > r['rank']:
+      if p == 'change':
+        for r in k2[p]:
+          if r['rank'] <= 5:
             rr['rank'].append({'rank': 'up', 'keyword': r['keyword']})
-          elif r['last_rank'] < r['rank']:
-            rr['rank'].append({'rank': 'down', 'keyword': r['keyword']})
           else:
-            rr['rank'].append({'rank': 'same', 'keyword': r['keyword']})        
-        else:
-          break
+            break
+      else:
+        for r in rows:
+          if r['rank'] <= 5:
+            if r['last_rank'] == '-' or r['last_rank'] > r['rank']:
+              rr['rank'].append({'rank': 'up', 'keyword': r['keyword']})
+            elif r['last_rank'] < r['rank']:
+              rr['rank'].append({'rank': 'down', 'keyword': r['keyword']})
+            else:
+              rr['rank'].append({'rank': 'same', 'keyword': r['keyword']})        
+          else:
+            break
       rank_pos.append(rr)
       
         

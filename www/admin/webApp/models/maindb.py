@@ -242,8 +242,6 @@ def save_ranking_pos(tm, ranking):
     cur = con.cursor()
 
     for p in ranking:
-      if p == 'change':
-        continue
       sql = '''
       INSERT INTO
         display_rank_{} (date, rank, last_rank, keyword)
