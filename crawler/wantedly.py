@@ -363,8 +363,7 @@ def parse_page(project, root):
     elif header == 'もっと知りたいリクエスト':
       pass
     else:
-      print(header)
-      raise('Unknown column')
+      print('Unknown column: {} {}'.format(header, URL_base.format(project)))
   return {'job':job, 'offer': offer, 'details': details, 'interview': interviews, 'apply': bosyu, 'company': kaisya}
   
 def crawl_main(db):
@@ -372,12 +371,12 @@ def crawl_main(db):
   login(s)
   page = 1
   while True:
-    print(page)
+    #print(page)
     url_list = getURLs(s, page, ['engineer', 'web_engineer', 'mobile_engineer', 'infra_engineer', 'others_engineer', 'designer', 'ui_designer', 'graphic_designer', 'others_designer', 'director', 'corporate_staff', 'sales', 'marketing', 'writer', 'others'])
     if url_list is None:
       break
     for p in url_list:
-      print(p)
+      #print(p)
       url = URL_base.format(p)
       r = requests.get(url)
       offer = parse_page(p, pq(r.text.encode('utf-8')))
