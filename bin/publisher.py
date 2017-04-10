@@ -90,7 +90,7 @@ def get_rank_comment():
       
       rows = cur.fetchall()
       if p == 'change':
-        for r in k2[p]:
+        for r in rows:
           if r['rank'] <= 5:
             rr['rank'].append({'rank': 'up', 'keyword': r['keyword']})
           else:
