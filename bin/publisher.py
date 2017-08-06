@@ -38,7 +38,7 @@ def get_rank_comment():
     'sales': '営業系',
     'consul': 'コンサルタント系',
     'other': 'その他',
-    'change': '新規注目',
+    'change': '新規急上昇',
   }
   
   with sqlite3.connect(db) as con:
