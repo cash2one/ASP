@@ -145,7 +145,7 @@ if __name__ == '__main__':
 
     tpl = env.get_template('index.html')
     index_html = home + '/www/public/index.html'
-    msg = tpl.render(ranking=rank_pos)
+    msg = tpl.render(ranking=rank_pos, today=datetime.datetime.now().strftime('%Y%m%d'))
     with open(index_html, 'w') as f:
       f.write(msg)
 

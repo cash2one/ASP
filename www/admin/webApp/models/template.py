@@ -3,6 +3,7 @@
 import flask
 import sqlite3
 import os
+import datetime
 
 def render_json(rank, comment):
   home = os.environ.get('ASP_HOME', '/home/asp')
@@ -24,7 +25,7 @@ def render_each(rank):
   
   page = {}
   
-  msg = flask.render_template('index.html', ranking=rank)
+  msg = flask.render_template('index.html', ranking=rank, today=datetime.datetime.now().strftime('%Y%m%d'))
   with open(index_html, 'w') as f:
     f.write(msg)
 
