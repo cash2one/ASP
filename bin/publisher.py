@@ -30,6 +30,9 @@ def get_rank_comment():
                  {'rank': 'same', 'keyword': '一緒'},
                  {'rank': 'same', 'keyword': '成長'},
                  {'rank': 'same', 'keyword': '活躍'},
+                 {'rank': 'same', 'keyword': 'お任せします'},
+                 {'rank': 'same', 'keyword': '環境'},
+                 {'rank': 'same', 'keyword': '経験'},
                ]
              }]
   names = {
