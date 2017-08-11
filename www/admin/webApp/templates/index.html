@@ -139,10 +139,11 @@ var cats = [
 for ( var i=0,c=cats.length; i<c; i++ ) {
 	var b;
 	if(i == 0) {
+		/* 殿堂入り */
 		var l = [];
 		for(var k = 0; k < 5; k++){
 			for (;;) {
-			  var n = Math.floor( Math.random () * cats[i].length);
+			  var n = Math.floor( Math.random () * (cats[i].length - 1)) + 1;
 			  if(l.indexOf(n) == -1) {
 			    l.push(n);
 			    break;
@@ -158,8 +159,12 @@ for ( var i=0,c=cats.length; i<c; i++ ) {
 	for ( var j=0,d=b.length; j<d; j++ ) {
 		var r = b[j];
 		var rank = $("<div/>",{ class: "rank" });
-		rank.append($("<span/>",{ class: "num" }).append(j+1));
-		rank.append($("<span/>",{ class: r.t }));
+		if(i == 0){
+		  rank.append($("<span/>",{ class: "num" }).append(j+1));
+		} else {
+		  rank.append($("<span/>",{ class: "num" }).append(j+1));
+		}
+		rank.append($("<span/>",{ class: r.t }));														 
 		rank.append($("<span/>",{ class: "word" }).append(r.w));
 		box.append(rank);
 	}
