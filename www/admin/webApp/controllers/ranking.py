@@ -17,11 +17,11 @@ def save_ranking(tm, comment):
   for r in k:
     if r['rank'] <= 5:
       if r['last_rank'] == '-' or r['last_rank'] > r['rank']:
-        rank.append({'rank': 'up', 'keyword': r['keyword']})
+        rank.append({'rank': 'up', 'keyword': r['keyword'], 'no': r['rank']})
       elif r['last_rank'] < r['rank']:
-        rank.append({'rank': 'down', 'keyword': r['keyword']})
+        rank.append({'rank': 'down', 'keyword': r['keyword'], 'no': r['rank']})
       else:
-        rank.append({'rank': 'same', 'keyword': r['keyword']})        
+        rank.append({'rank': 'same', 'keyword': r['keyword'], 'no': r['rank']})        
     else:
       break
   
@@ -34,6 +34,9 @@ def save_ranking(tm, comment):
              {'rank': 'same', 'keyword': '一緒'},
              {'rank': 'same', 'keyword': '成長'},
              {'rank': 'same', 'keyword': '活躍'},
+             {'rank': 'same', 'keyword': 'お任せします'},
+             {'rank': 'same', 'keyword': '環境'},
+             {'rank': 'same', 'keyword': '経験'},
            ]
            }]
   names = {
@@ -52,18 +55,18 @@ def save_ranking(tm, comment):
     if p == 'change':
       for r in k2[p]:
         if r['rank'] <= 5:
-          rr['rank'].append({'rank': 'up', 'keyword': r['keyword']})
+          rr['rank'].append({'rank': 'up', 'keyword': r['keyword'], 'no': r['rank']})
         else:
           break
     else:
       for r in k2[p]:
         if r['rank'] <= 5:
           if r['last_rank'] == '-' or r['last_rank'] > r['rank']:
-            rr['rank'].append({'rank': 'up', 'keyword': r['keyword']})
+            rr['rank'].append({'rank': 'up', 'keyword': r['keyword'], 'no': r['rank']})
           elif r['last_rank'] < r['rank']:
-            rr['rank'].append({'rank': 'down', 'keyword': r['keyword']})
+            rr['rank'].append({'rank': 'down', 'keyword': r['keyword'], 'no': r['rank']})
           else:
-            rr['rank'].append({'rank': 'same', 'keyword': r['keyword']})        
+            rr['rank'].append({'rank': 'same', 'keyword': r['keyword'], 'no': r['rank']})        
         else:
           break
     rank.append(rr)
