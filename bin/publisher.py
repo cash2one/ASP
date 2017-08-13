@@ -65,11 +65,11 @@ def get_rank_comment():
     for r in rows:
       if r['rank'] <= 5:
         if r['last_rank'] == '-' or r['last_rank'] > r['rank']:
-          rank.append({'rank': 'up', 'keyword': r['keyword'], 'no', r['rank']})
+          rank.append({'rank': 'up', 'keyword': r['keyword'], 'no': r['rank']})
         elif r['last_rank'] < r['rank']:
-          rank.append({'rank': 'down', 'keyword': r['keyword'], 'no', r['rank']})
+          rank.append({'rank': 'down', 'keyword': r['keyword'], 'no': r['rank']})
         else:
-          rank.append({'rank': 'same', 'keyword': r['keyword'], 'no', r['rank']})        
+          rank.append({'rank': 'same', 'keyword': r['keyword'], 'no': r['rank']})        
       else:
         break
     for p in ['change', 'engineer', 'designer', 'sales', 'consul']:
@@ -95,18 +95,18 @@ def get_rank_comment():
       if p == 'change':
         for r in rows:
           if r['rank'] <= 5:
-            rr['rank'].append({'rank': 'up', 'keyword': r['keyword'], 'no', r['rank']})
+            rr['rank'].append({'rank': 'up', 'keyword': r['keyword'], 'no': r['rank']})
           else:
             break
       else:
         for r in rows:
           if r['rank'] <= 5:
             if r['last_rank'] == '-' or r['last_rank'] > r['rank']:
-              rr['rank'].append({'rank': 'up', 'keyword': r['keyword'], 'no', r['rank']})
+              rr['rank'].append({'rank': 'up', 'keyword': r['keyword'], 'no': r['rank']})
             elif r['last_rank'] < r['rank']:
-              rr['rank'].append({'rank': 'down', 'keyword': r['keyword'], 'no', r['rank']})
+              rr['rank'].append({'rank': 'down', 'keyword': r['keyword'], 'no': r['rank']})
             else:
-              rr['rank'].append({'rank': 'same', 'keyword': r['keyword'], 'no', r['rank']})        
+              rr['rank'].append({'rank': 'same', 'keyword': r['keyword'], 'no': r['rank']})        
           else:
             break
       rank_pos.append(rr)
