@@ -3,7 +3,7 @@ import datetime
 
 import webApp.models as models
 
-palace_words = ['世界', 'しませんか', '一緒', '成長', '活躍', 'お任せします', '環境', '経験']
+palace_words = ['世界', 'しませんか', '一緒', '成長', '活躍', 'お任せします', '環境', '経験', 'ui', '設計', '技術', '挑戦', '運用']
 
 def get(site):
   r = models.maindb.crawl_history(site, 2)

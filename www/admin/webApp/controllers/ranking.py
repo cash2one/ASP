@@ -37,6 +37,11 @@ def save_ranking(tm, comment):
              {'rank': 'same', 'keyword': 'お任せします'},
              {'rank': 'same', 'keyword': '環境'},
              {'rank': 'same', 'keyword': '経験'},
+             {'rank': 'same', 'keyword': 'ui'},
+             {'rank': 'same', 'keyword': '設計'},
+             {'rank': 'same', 'keyword': '技術'},
+             {'rank': 'same', 'keyword': '挑戦'},
+             {'rank': 'same', 'keyword': '運用'},                 
            ]
            }]
   names = {
