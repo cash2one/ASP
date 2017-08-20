@@ -31,7 +31,58 @@ $(document).ready(function(){
 	});
 });
 
-(function (app) {
+var cats = [
+{% for ranks in ranking %}
+			[
+			"{{ ranks.name }}",
+{% for r in ranks.rank %}
+			{ t:"{{ r.rank }}", w:"{{ r.keyword }}", n:"{{ r.no }}" },
+{% endfor %}
+		],
+{% endfor %}
+];
+for ( var i=0,c=cats.length; i<c; i++ ) {
+	var b;
+	if(i == 0) {
+		/* 殿堂入り */
+		var l = [];
+		for(var k = 0; k < 5; k++){
+			for (;;) {
+			  var n = Math.floor( Math.random () * (cats[i].length - 1)) + 1;
+			  if(l.indexOf(n) == -1) {
+			    l.push(n);
+			    break;
+			  }
+			}
+		}
+		var b = [cats[i][0], cats[i][l[0]], cats[i][l[1]], cats[i][l[2]], cats[i][l[3]], cats[i][l[4]]];
+  } else {
+	  var b = cats[i];
+	}
+	var box = $("<div/>",{ class: "box onethird" });
+	box.append($("<h3/>").append(b.shift()));
+	for ( var j=0,d=b.length; j<d; j++ ) {
+		var r = b[j];
+		var rank = $("<div/>",{ class: "rank" });
+		if(i == 0){
+		  rank.append($("<span/>",{ class: "num" }));
+		} else {
+		  rank.append($("<span/>",{ class: "num" }).append(r.n));
+		}
+		rank.append($("<span/>",{ class: r.t }));														 
+		rank.append($("<span/>",{ class: "word" }).append(r.w));
+		box.append(rank);
+	}
+	$(".boxes.category").append(box);
+}
+$(window).on("load",function(){
+	$(".blacket").addClass("on");
+	setTimeout(function(){
+		$("#menu, header, .blacket .left, .blacket .right, .box, footer").addClass("shown");
+	}, 2600);
+});
+
+/*(function (app) {
 		var loading_class = 'loading';
 		var html = document.documentElement;
 		loading_class = ' ' + loading_class + ' ';
@@ -90,3 +141,5 @@ $(document).ready(function(){
 		function init () {
 		}
 })(window.applicationCache);
+*/
+

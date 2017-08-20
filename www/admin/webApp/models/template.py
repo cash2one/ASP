@@ -14,7 +14,7 @@ def render_json(rank, comment):
           'comment': comment
           }
   
-  msg = flask.render_template('common.js', page=page)
+  msg = flask.render_template('common.js', page=page, ranking=rank)
   with open(common_js, 'w') as f:
     f.write(msg)
 

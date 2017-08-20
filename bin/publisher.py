@@ -146,7 +146,7 @@ if __name__ == '__main__':
     
     page = {'rank': rank,
             'comment': comment}
-    msg = tpl.render(page=page)
+    msg = tpl.render(page=page, ranking=rank_pos)
     with open(common_js, 'w') as f:
       f.write(msg)
 
