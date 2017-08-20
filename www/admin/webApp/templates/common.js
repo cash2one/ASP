@@ -1,80 +1,82 @@
-$(document).ready(function(){
-	var data = [
-		"{{ page.comment }}",
-		[
-				{% for r in page.rank %}
-				{ t:"{{ r.rank }}", w:"{{ r.keyword }}" },
-				{% endfor %}
-		]
-	];
-	$(".boxes.weekly .onethird p, #menu p").html(data[0]);
-	for ( var i=0,c=data[1].length; i<c; i++ ) {
-		var r = data[1][i];
-		var rank = $("<div/>",{ class: "rank" });
-		rank.append($("<span/>",{ class: "num" }).append(i+1));
-		rank.append($("<span/>",{ class: r.t }));
-		rank.append($("<span/>",{ class: "word" }).append(r.w));
-		$(".boxes.weekly .twothird").append(rank);
-	}
-	$("#menu .switch").click(function(){
-		$("#menu").toggleClass("open");
-	});
-	$(".box").each(function( i, el ){
-		if ( !$(el).hasClass("on") && $(el).offset().top + 100 < $(window).scrollTop()+$(window).height() ) {
-			$(el).addClass("on");
-		}
-		$(window).on("scroll", function(){
-			if ( !$(el).hasClass("on") && $(el).offset().top + 100 < $(window).scrollTop()+$(window).height() ) {
-				$(el).addClass("on");
-			}
-		});
-	});
-});
 
 var cats = [
-{% for ranks in ranking %}
-			[
-			"{{ ranks.name }}",
-{% for r in ranks.rank %}
-			{ t:"{{ r.rank }}", w:"{{ r.keyword }}", n:"{{ r.no }}" },
-{% endfor %}
+		{% for ranks in ranking %}
+		[
+				"{{ ranks.name }}",
+				{% for r in ranks.rank %}
+				{ t:"{{ r.rank }}", w:"{{ r.keyword }}", n:"{{ r.no }}" },
+				{% endfor %}
 		],
-{% endfor %}
+		{% endfor %}
 ];
-for ( var i=0,c=cats.length; i<c; i++ ) {
-	var b;
-	if(i == 0) {
-		/* 殿堂入り */
-		var l = [];
-		for(var k = 0; k < 5; k++){
-			for (;;) {
-			  var n = Math.floor( Math.random () * (cats[i].length - 1)) + 1;
-			  if(l.indexOf(n) == -1) {
-			    l.push(n);
-			    break;
-			  }
-			}
+
+$(document).ready(function(){
+		var data = [
+				"{{ page.comment }}",
+				[
+						{% for r in page.rank %}
+						{ t:"{{ r.rank }}", w:"{{ r.keyword }}" },
+						{% endfor %}
+				]
+		];
+		$(".boxes.weekly .onethird p, #menu p").html(data[0]);
+		for ( var i=0,c=data[1].length; i<c; i++ ) {
+				var r = data[1][i];
+				var rank = $("<div/>",{ class: "rank" });
+				rank.append($("<span/>",{ class: "num" }).append(i+1));
+				rank.append($("<span/>",{ class: r.t }));
+				rank.append($("<span/>",{ class: "word" }).append(r.w));
+				$(".boxes.weekly .twothird").append(rank);
 		}
-		var b = [cats[i][0], cats[i][l[0]], cats[i][l[1]], cats[i][l[2]], cats[i][l[3]], cats[i][l[4]]];
-  } else {
-	  var b = cats[i];
-	}
-	var box = $("<div/>",{ class: "box onethird" });
-	box.append($("<h3/>").append(b.shift()));
-	for ( var j=0,d=b.length; j<d; j++ ) {
-		var r = b[j];
-		var rank = $("<div/>",{ class: "rank" });
-		if(i == 0){
-		  rank.append($("<span/>",{ class: "num" }));
-		} else {
-		  rank.append($("<span/>",{ class: "num" }).append(r.n));
-		}
-		rank.append($("<span/>",{ class: r.t }));														 
-		rank.append($("<span/>",{ class: "word" }).append(r.w));
-		box.append(rank);
-	}
-	$(".boxes.category").append(box);
-}
+		$("#menu .switch").click(function(){
+				$("#menu").toggleClass("open");
+		});
+		$(".box").each(function( i, el ){
+				if ( !$(el).hasClass("on") && $(el).offset().top + 100 < $(window).scrollTop()+$(window).height() ) {
+						$(el).addClass("on");
+				}
+				$(window).on("scroll", function(){
+						if ( !$(el).hasClass("on") && $(el).offset().top + 100 < $(window).scrollTop()+$(window).height() ) {
+								$(el).addClass("on");
+						}
+				});
+		});
+		for ( var i=0,c=cats.length; i<c; i++ ) {
+				var b;
+				if(i == 0) {
+						/* 殿堂入り */
+						var l = [];
+						for(var k = 0; k < 5; k++){
+								for (;;) {
+										var n = Math.floor( Math.random () * (cats[i].length - 1)) + 1;
+										if(l.indexOf(n) == -1) {
+												l.push(n);
+												break;
+										}
+								}
+						}
+						var b = [cats[i][0], cats[i][l[0]], cats[i][l[1]], cats[i][l[2]], cats[i][l[3]], cats[i][l[4]]];
+				} else {
+						var b = cats[i];
+				}
+				var box = $("<div/>",{ class: "box onethird" });
+				box.append($("<h3/>").append(b.shift()));
+				for ( var j=0,d=b.length; j<d; j++ ) {
+						var r = b[j];
+						var rank = $("<div/>",{ class: "rank" });
+						if(i == 0){
+								rank.append($("<span/>",{ class: "num" }));
+						} else {
+								rank.append($("<span/>",{ class: "num" }).append(r.n));
+						}
+						rank.append($("<span/>",{ class: r.t }));														 
+						rank.append($("<span/>",{ class: "word" }).append(r.w));
+						box.append(rank);
+				}
+				$(".boxes.category").append(box);
+		}		
+});
+
 $(window).on("load",function(){
 	$(".blacket").addClass("on");
 	setTimeout(function(){
