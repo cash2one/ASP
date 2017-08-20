@@ -82,7 +82,7 @@ $(window).on("load",function(){
 	}, 2600);
 });
 
-/*(function (app) {
+(function (app) {
 		var loading_class = 'loading';
 		var html = document.documentElement;
 		loading_class = ' ' + loading_class + ' ';
@@ -141,5 +141,5 @@ $(window).on("load",function(){
 		function init () {
 		}
 })(window.applicationCache);
-*/
+
 
