@@ -30,3 +30,63 @@ $(document).ready(function(){
 		});
 	});
 });
+
+(function (app) {
+		var loading_class = 'loading';
+		var html = document.documentElement;
+		loading_class = ' ' + loading_class + ' ';
+		
+		//未サポート
+		if (!app || app.UNCACHED === app.status) {
+				init();
+				return;
+		}
+		
+		//初期読み込み
+		if (!localStorage.appcaching) {
+				localStorage.appcaching = 1;
+				init();
+				return;
+		}
+		
+		//キャッシュが古くなっている
+		if (app.status === app.UPDATEREADY) {
+				location.reload();
+				return;
+		}
+		//更新不要
+		if (app.status === app.IDLE || app.status === app.OBSOLETE) {
+				init();
+				return;
+		}
+		
+		//ローディング開始
+		html.className += loading_class;
+		
+		//更新不要
+		app.addEventListener('cached', start);
+		//更新なし
+		app.addEventListener('noupdate', start);
+		//更新不可
+		app.addEventListener('obsolete', start);
+		//キャッシュが古くなっている
+		app.addEventListener('updateready', function () {
+				location.reload();
+		});
+		//更新不可
+		app.addEventListener('error', start);
+		//timeout
+		var timeout = setTimeout(start, 3000);
+		
+		function start () {
+				if (start.fire) {
+						return;
+				}
+				clearTimeout(timeout);
+				start.fire = 1;
+				html.className = html.className.replace(loading_class, '');
+				init();
+		}
+		function init () {
+		}
+})(window.applicationCache);
