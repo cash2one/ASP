@@ -1,15 +1,3 @@
-
-var cats = [
-		{% for ranks in ranking %}
-		[
-				"{{ ranks.name }}",
-				{% for r in ranks.rank %}
-				{ t:"{{ r.rank }}", w:"{{ r.keyword }}", n:"{{ r.no }}" },
-				{% endfor %}
-		],
-		{% endfor %}
-];
-
 $(document).ready(function(){
 		var data = [
 				"{{ page.comment }}",
@@ -19,6 +7,17 @@ $(document).ready(function(){
 						{% endfor %}
 				]
 		];
+		var cats = [
+				{% for ranks in ranking %}
+				[
+						"{{ ranks.name }}",
+						{% for r in ranks.rank %}
+						{ t:"{{ r.rank }}", w:"{{ r.keyword }}", n:"{{ r.no }}" },
+						{% endfor %}
+				],
+				{% endfor %}
+		];
+
 		$(".boxes.weekly .onethird p, #menu p").html(data[0]);
 		for ( var i=0,c=data[1].length; i<c; i++ ) {
 				var r = data[1][i];
@@ -28,19 +27,7 @@ $(document).ready(function(){
 				rank.append($("<span/>",{ class: "word" }).append(r.w));
 				$(".boxes.weekly .twothird").append(rank);
 		}
-		$("#menu .switch").click(function(){
-				$("#menu").toggleClass("open");
-		});
-		$(".box").each(function( i, el ){
-				if ( !$(el).hasClass("on") && $(el).offset().top + 100 < $(window).scrollTop()+$(window).height() ) {
-						$(el).addClass("on");
-				}
-				$(window).on("scroll", function(){
-						if ( !$(el).hasClass("on") && $(el).offset().top + 100 < $(window).scrollTop()+$(window).height() ) {
-								$(el).addClass("on");
-						}
-				});
-		});
+
 		for ( var i=0,c=cats.length; i<c; i++ ) {
 				var b;
 				if(i == 0) {
@@ -75,6 +62,21 @@ $(document).ready(function(){
 				}
 				$(".boxes.category").append(box);
 		}		
+
+		
+		$("#menu .switch").click(function(){
+				$("#menu").toggleClass("open");
+		});
+		$(".box").each(function( i, el ){
+				if ( !$(el).hasClass("on") && $(el).offset().top + 100 < $(window).scrollTop()+$(window).height() ) {
+						$(el).addClass("on");
+				}
+				$(window).on("scroll", function(){
+						if ( !$(el).hasClass("on") && $(el).offset().top + 100 < $(window).scrollTop()+$(window).height() ) {
+								$(el).addClass("on");
+						}
+				});
+		});
 });
 
 $(window).on("load",function(){
