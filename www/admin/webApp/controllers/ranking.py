@@ -13,20 +13,18 @@ def save_ranking(tm, comment):
   models.maindb.save_ranking(tm, k)
   models.maindb.save_ranking_pos(tm, k2)
 
-  rank = []
+  rank_t = []
   for r in k:
     if r['rank'] <= 5:
       if r['last_rank'] == '-' or r['last_rank'] > r['rank']:
-        rank.append({'rank': 'up', 'keyword': r['keyword'], 'no': r['rank']})
+        rank_t.append({'rank': 'up', 'keyword': r['keyword'], 'no': r['rank']})
       elif r['last_rank'] < r['rank']:
-        rank.append({'rank': 'down', 'keyword': r['keyword'], 'no': r['rank']})
+        rank_t.append({'rank': 'down', 'keyword': r['keyword'], 'no': r['rank']})
       else:
-        rank.append({'rank': 'same', 'keyword': r['keyword'], 'no': r['rank']})        
+        rank_t.append({'rank': 'same', 'keyword': r['keyword'], 'no': r['rank']})        
     else:
       break
   
-  models.template.render_json(rank, comment)
-
   rank = [{'name': '殿堂',
            'rank': [
              {'rank': 'same', 'keyword': '世界'},
@@ -83,5 +81,5 @@ def save_ranking(tm, comment):
         else:
           break
     rank.append(rr)
-        
+  models.template.render_json(rank_, rank, comment)        
   models.template.render_each(rank)

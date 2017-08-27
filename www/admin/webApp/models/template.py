@@ -5,12 +5,12 @@ import sqlite3
 import os
 import datetime
 
-def render_json(rank, comment):
+def render_json(rank_t, rank, comment):
   home = os.environ.get('ASP_HOME', '/home/asp')
   common_js = home + '/www/staging/js/common.js'
 
   
-  page = {'rank': rank,
+  page = {'rank': rank_t,
           'comment': comment
           }
   
