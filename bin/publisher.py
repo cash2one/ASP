@@ -39,7 +39,14 @@ def get_rank_comment():
                  {'rank': 'same', 'keyword': '技術'},
                  {'rank': 'same', 'keyword': '挑戦'},
                  {'rank': 'same', 'keyword': '運用'},                 
-                 
+                 {'rank': 'same', 'keyword': '急成長'},
+                 {'rank': 'same', 'keyword': '新規事業'},             
+                 {'rank': 'same', 'keyword': 'ベンチャー'},
+                 {'rank': 'same', 'keyword': 'サービス'},
+                 {'rank': 'same', 'keyword': '未経験'},
+                 {'rank': 'same', 'keyword': '残業'},
+                 {'rank': 'same', 'keyword': 'php'},
+                 {'rank': 'same', 'keyword': '東京勤務'},                 
                ]
              }]
   names = {
