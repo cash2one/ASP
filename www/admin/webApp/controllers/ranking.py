@@ -81,5 +81,5 @@ def save_ranking(tm, comment):
         else:
           break
     rank.append(rr)
-  models.template.render_json(rank_, rank, comment)        
+  models.template.render_json(rank_t, rank, comment)        
   models.template.render_each(rank)
