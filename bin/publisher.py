@@ -99,6 +99,7 @@ def get_rank_comment():
        display_rank_{}
       WHERE
        date = ?
+      GROUP BY rank, last_rank, keyword
       ORDER BY rank
       LIMIT 5;
       '''
