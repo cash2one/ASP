@@ -25,7 +25,7 @@ def save_ranking(tm, comment):
     else:
       break
   
-  rank = [{'name': '殿堂',
+  rank = [{'name': '殿堂（24キーワード）',
            'rank': [
              {'rank': 'same', 'keyword': '世界'},
              {'rank': 'same', 'keyword': 'しませんか'},
@@ -48,6 +48,8 @@ def save_ranking(tm, comment):
              {'rank': 'same', 'keyword': '残業'},
              {'rank': 'same', 'keyword': 'php'},
              {'rank': 'same', 'keyword': '東京勤務'},
+             {'rank': 'same', 'keyword': '責任者'},
+             {'rank': 'same', 'keyword': '日本'},             
            ]
            }]
   names = {
