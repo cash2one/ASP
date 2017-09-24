@@ -128,8 +128,6 @@ def get_pos_rank():
         continue
       if w['keyword'] in total_rank:
         continue
-      if w['keyword'] in ['ため']:
-        continue
       if w['keyword'] not in keyword:
         keyword[w['keyword']] = {'keyword': w['keyword'],
                                  'point': 0}
@@ -140,8 +138,6 @@ def get_pos_rank():
       if w in palace_words:
         continue
       if w in total_rank:
-        continue
-      if w['keyword'] in ['ため']:
         continue
       if w['keyword'] not in keyword:
         keyword[w['keyword']] = {'keyword': w['keyword'],
@@ -181,6 +177,8 @@ def get_pos_rank():
   ret2 = []
   for r in total:
     if r['rank'] > 100:
+      continue
+    if r['keyword'] in ['ため']:
       continue
     try:
       point = r['last_rank'] - r['rank']
