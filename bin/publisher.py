@@ -23,7 +23,7 @@ def get_rank_comment():
   
   db = home + '/db/main.sqlite3'
   rank = []
-  rank_pos = [{'name': '殿堂（24キーワード）',
+  rank_pos = [{'name': '殿堂（26キーワード）',
                'rank': [
                  {'rank': 'same', 'keyword': '世界'},
                  {'rank': 'same', 'keyword': 'しませんか'},
@@ -49,6 +49,8 @@ def get_rank_comment():
                  {'rank': 'same', 'keyword': '東京勤務'},
                  {'rank': 'same', 'keyword': '責任者'},
                  {'rank': 'same', 'keyword': '日本'},
+                 {'rank': 'same', 'keyword': '上流工程'},
+                 {'rank': 'same', 'keyword': '大阪勤務'},
                ]
              }]
   names = {
